@@ -1,0 +1,14 @@
+@model UploadImage.Models.ImageModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+@using (Html.BeginForm("Index", "Image", FormMethod.Post, new {enctype = "multipart/form-data"}))
+{
+    <div>
+        <input type="file" name="ImageData" id="ImageData"/>
+        <input type="submit" value="Submit Request"/>
+    </div>
+}
