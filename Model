@@ -1,0 +1,7 @@
+namespace UploadImage.Models
+{
+    public class ImageModel
+    {
+        public byte[] ImageBytes { get; set; }
+    }
+}
