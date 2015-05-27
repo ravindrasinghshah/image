@@ -1,0 +1,75 @@
+using System;
+using System.Data;
+using System.Data.SqlClient;
+using System.IO;
+using System.Web;
+using System.Web.Mvc;
+using UploadImage.Models;
+
+namespace UploadImage.Controllers
+{
+    public class ImageController : Controller
+    {
+        
+        [HttpGet]
+        public ActionResult Index()
+        {
+            var model = new ImageModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Index(ImageModel model)
+        {
+            var target = new MemoryStream();
+
+            var file = Request.Files["ImageData"];
+
+            model.ImageBytes = ConvertToBytes(file);
+            var a = UploadFile(model);
+            return RedirectToAction("Index");
+        }
+
+        public byte[] ConvertToBytes(HttpPostedFileBase image)
+        {
+            byte[] imageBytes = null;
+            var reader = new BinaryReader(image.InputStream);
+            imageBytes = reader.ReadBytes(image.ContentLength);
+            return imageBytes;
+        }
+
+        /// <summary>
+        /// Upload your data to database
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public bool UploadFile(ImageModel model)
+        {
+            var sqlConnection =  new SqlConnection();
+            try
+            {
+                sqlConnection =
+                    new SqlConnection("Data Source=NIBC2167;initial Catalog=ImageStorage;user id=sa;password=nous@123;Integrated Security=True;");
+
+                var cmd = new SqlCommand
+                {
+                    CommandType = CommandType.Text,
+                    CommandText = "INSERT INTO [dbo].[ImageStore]  ([ImageI]) VALUES ('" + model.ImageBytes + "')",
+                    Connection = sqlConnection
+                };
+
+                sqlConnection.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+            return true;
+        }
+    }
+}
