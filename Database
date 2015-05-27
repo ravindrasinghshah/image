@@ -1,0 +1,17 @@
+-- CREATE DATABASE before this
+USE [ImageStorage]
+GO
+/****** Object:  Table [dbo].[ImageStore]    Script Date: 05/26/2015 17:10:12 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[ImageStore](
+	[ImageV] [varbinary](max) NULL,
+	[imageI] [image] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
