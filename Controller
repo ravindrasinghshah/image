@@ -49,7 +49,7 @@ namespace UploadImage.Controllers
             try
             {
                 sqlConnection =
-                    new SqlConnection("Data Source=NIBC2167;initial Catalog=ImageStorage;user id=sa;password=nous@123;Integrated Security=True;");
+                    new SqlConnection("Data Source=;initial Catalog=DBSchema;user id=yourId;password=yourPwd;Integrated Security=True;");
 
                 var cmd = new SqlCommand
                 {
